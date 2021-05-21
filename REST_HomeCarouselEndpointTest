@@ -1,0 +1,111 @@
+/**
+ * @description       : Test Class for REST_HomeCarouselEndpoint Web Service
+ * @author            : Vignesh Nayak S
+ * @group             : 
+ * @last modified on  : 09-23-2020
+ * @last modified by  : 
+ * Modifications Log 
+ * Ver   Date         Author          Modification
+**/
+@isTest(seeAllData=false)
+public with sharing class REST_HomeCarouselEndpointTest {
+    public REST_HomeCarouselEndpointTest() {
+        
+    }
+    @testSetup
+    static void createTestData(){
+        List<Account> accRecList = TestDataUtil.createAccounts(1, true, new Map <String, Object>());
+        List <Opportunity> oppRec = TestDataUtil.createOpportunities(10, true, new Map <String, Object> {'AccountId'=> accRecList[0].Id, 'Closedate' => System.today()});
+        List <Contact> conRecList = TestDataUtil.createContacts(1, true, new Map < String, String > ());
+        List <Case> CaseRec = TestDataUtil.createCaseswithStatus(1, false, new Map < String, String > (), 'PA-200');
+        CaseRec[0].AccountId = accRecList[0].Id;
+        CaseRec[0].contactId = conRecList[0].Id;
+        CaseRec[0].Priority = 'High';
+        insert CaseRec;
+    }
+    @isTest
+    private static void testHomeCarouselEndpoint() {
+        RestRequest req = new RestRequest(); 
+        req.requestURI = '/services/apexrest/Home/Carousel/*';
+        req.httpMethod = 'GET';
+        
+        RestContext.request = req;        
+        test.startTest();
+        Rest_BaseResponseWrapper responseWrapper = REST_HomeCarouselEndpoint.getData();
+        system.assertEquals(true,  responseWrapper.success);
+        test.stopTest();
+    }
+    @isTest
+    private static void testHomeCarouselEndpointAccountParameter() {
+        RestRequest req = new RestRequest(); 
+        req.requestURI = '/services/apexrest/Home/Carousel';
+        req.httpMethod = 'GET';
+        req.addParameter('object', 'Account');
+        RestContext.request = req;        
+        test.startTest();
+        Rest_BaseResponseWrapper responseWrapper = REST_HomeCarouselEndpoint.getData();
+        system.assertEquals(true,  responseWrapper.success);
+        test.stopTest();
+    }
+     @isTest
+    private static void testHomeCarouselEndpointOpportunityParameter() {
+        RestRequest req = new RestRequest(); 
+        req.requestURI = '/services/apexrest/Home/Carousel';
+        req.httpMethod = 'GET';
+        req.addParameter('object', 'Opportunity');
+        RestContext.request = req;        
+        test.startTest();
+        Rest_BaseResponseWrapper responseWrapper = REST_HomeCarouselEndpoint.getData();
+        system.assertEquals(true,  responseWrapper.success);
+        test.stopTest();
+    }
+     @isTest
+    private static void testHomeCarouselEndpointQuoteParameter() {
+        RestRequest req = new RestRequest(); 
+        req.requestURI = '/services/apexrest/Home/Carousel';
+        req.httpMethod = 'GET';
+        req.addParameter('object', 'Quote');
+        RestContext.request = req;        
+        test.startTest();
+        Rest_BaseResponseWrapper responseWrapper = REST_HomeCarouselEndpoint.getData();
+        system.assertEquals(true,  responseWrapper.success);
+        test.stopTest();
+    }
+     @isTest
+    private static void testHomeCarouselEndpointDealRegParameter() {
+        RestRequest req = new RestRequest(); 
+        req.requestURI = '/services/apexrest/Home/Carousel';
+        req.httpMethod = 'GET';
+        req.addParameter('object', 'DealReg');
+        RestContext.request = req;        
+        test.startTest();
+        Rest_BaseResponseWrapper responseWrapper = REST_HomeCarouselEndpoint.getData();
+        system.assertEquals(true,  responseWrapper.success);
+        test.stopTest();
+    }
+     @isTest
+    private static void testHomeCarouselEndpointCaseParameter() {
+        RestRequest req = new RestRequest(); 
+        req.requestURI = '/services/apexrest/Home/Carousel';
+        req.httpMethod = 'GET';
+        req.addParameter('object', 'Case');
+        RestContext.request = req;        
+        test.startTest();
+        Rest_BaseResponseWrapper responseWrapper = REST_HomeCarouselEndpoint.getData();
+        system.assertEquals(true,  responseWrapper.success);
+        test.stopTest();
+    }
+    
+    @isTest
+    private static void testHomeCarouselEndpointPipelineParameter() {
+        RestRequest req = new RestRequest(); 
+        req.requestURI = '/services/apexrest/Home/Carousel';
+        req.httpMethod = 'GET';
+        req.addParameter('pipeline', 'Opportunity');
+        RestContext.request = req;        
+        test.startTest();
+        Rest_BaseResponseWrapper responseWrapper = REST_HomeCarouselEndpoint.getData();
+        system.assertEquals(true,  responseWrapper.success);
+        test.stopTest();
+    }
+}
