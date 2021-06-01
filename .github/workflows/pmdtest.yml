@@ -1,13 +1,14 @@
-name: PMD Source Code Analyzer on Push
-
+name: CI
 on: [push]
-
 jobs:
-  pmd:
-  
+  analyze:
+    name: Run PMD
     runs-on: ubuntu-latest
-    
     steps:
-      - name: PMD Code Analyzer Action
-        uses: billyan2018/setup-pmd@PMDAnalyzer1.0
-        run: pmd -d ./src -R category/apex/design.xml -f text
+      - uses: actions/checkout@v2
+      - id: pmd
+        uses: rtjl/pmd-analyzer-action@v0.1.5-alpha
+        with:
+          pmd-version: '6.31.0'
+          source-path: './src'
+          rule-path: './PMD.Rules.xml'
