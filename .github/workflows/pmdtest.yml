@@ -1,22 +1,13 @@
-name: PMD Static Code Analysis
-on:
-  pull_request:
-  push:
+name: PMD Source Code Analyzer on Push
+
+on: [push]
 
 jobs:
-  build:
+  pmd:
+  
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-        with:
-          # Incremental diffs require fetch depth to be at 0 to grab the target branch
-          fetch-depth: '0'
-      - name: Run PMD Analyser
-        uses: synergy-au/pmd-analyser-action@v1
-        with:
-          pmd-version: '6.33.0'
-          file-path: './src'
-          rules-path: './pmd-ruleset.xml'
-          error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
+      - uses: sfdx-actions/setup-pmd@v1
+      - name: run-pmd
+        run: pmd -d ./force-app/main/default/classes -R category/apex/design.xml -f text
