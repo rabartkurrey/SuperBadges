@@ -1,0 +1,52 @@
+/**
+ *  @Name:          TooManySOQLSolution
+ *  @Description:   This is a one time script to fix the Too Many SOQL Queries issue while the PB is deactivated.
+ *  @Author:        Mahesh Devarasetti
+ *  @Date:          June-30-2020
+ *
+ *  Change Log
+ *  -----------------------------------------------------------
+ *  Developer           Modification Date           Comments
+ *  -----------------------------------------------------------
+ *  Mahesh Devarasetti   June/30/2020               Initial Version
+ *
+ **/
+public class TooManySOQLSolution {
+    public void processRequest(String quoteId, String quoteType, String recordTypeId, String transactionType, String oppType) {
+        System.debug('TooManySOQLSolution: processRequest: Started.');
+        SBQQ__Quote__c qt = [Select Id, SBQQ__Primary__c, PO_Date__c, SBQQ__Ordered__c, SBQQ__Opportunity2__c, PO_Number__c, 
+                     ASC__c, Panw_Distributor__c, SBQQ__PriceBook__c, SBQQ__PriceBook__r.Id,
+                     Reseller__c from SBQQ__Quote__c where Id = :quoteId];
+
+		qt.SBQQ__Primary__c = true;
+		qt.PO_Date__c = SYstem.today();
+		qt.SBQQ__Ordered__c = true;
+
+		update qt;
+
+		List<SBQQ__QuoteLine__c> qlList = [Select Id, SBQQ__StartDate__c from SBQQ__QuoteLine__c where SBQQ__Quote__c =: qt.Id];
+
+		for(SBQQ__QuoteLine__c qLine: qlList) {
+		    qLine.SBQQ__StartDate__c = System.today();
+		}
+
+		update qlList;
+
+		Opportunity opp = new Opportunity(Id = qt.SBQQ__Opportunity2__c);
+		opp.ASC__c = qt.ASC__c;
+		opp.CloseDate = System.today();
+		opp.Distributor__c = qt.Panw_Distributor__c;
+		opp.Pricebook2Id = qt.SBQQ__PriceBook__c;
+		opp.Quote_Type__c = quoteType;
+		opp.RecordTypeId = recordTypeId;
+		opp.SAP_PONumber__c = qt.PO_Number__c;
+		opp.Second_Tier_Reseller__c = qt.Reseller__c;
+		opp.StageName = '10 - Closed - Won';
+		opp.Transaction_Type__c = transactionType;
+		opp.Type = oppType;
+		
+		update opp;
+    }
+}
+
+new TooManySOQLSolution().processRequest('aEL0q0000004bqbGAA', 'Steelbrick Quote', '01270000000Hgep', 'New', 'Initial Business');
