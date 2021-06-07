@@ -103,34 +103,7 @@
 		</properties>
 	</rule>
 
-	<!-- PERFORMANCE -->
-	<rule ref="category/apex/performance.xml/AvoidSoqlInLoops" message="Avoid Soql queries inside loops">
-		<priority>3</priority>
-		<properties>
-			<!-- relevant for Code Climate output only -->
-			<property name="cc_categories" value="Performance" />
-			<property name="cc_remediation_points_multiplier" value="150" />
-			<property name="cc_block_highlighting" value="false" />
-		</properties>
-	</rule>
-	<rule ref="category/apex/performance.xml/AvoidSoslInLoops" message="Avoid Sosl queries inside loops">
-		<priority>3</priority>
-		<properties>
-			<!-- relevant for Code Climate output only -->
-			<property name="cc_categories" value="Performance" />
-			<property name="cc_remediation_points_multiplier" value="150" />
-			<property name="cc_block_highlighting" value="false" />
-		</properties>
-	</rule>
-	<rule ref="category/apex/performance.xml/AvoidDmlStatementsInLoops" message="Avoid DML Statements inside loops">
-		<priority>3</priority>
-		<properties>
-			<!-- relevant for Code Climate output only -->
-			<property name="cc_categories" value="Performance" />
-			<property name="cc_remediation_points_multiplier" value="150" />
-			<property name="cc_block_highlighting" value="false" />
-		</properties>
-	</rule>
+
 	<rule ref="category/apex/errorprone.xml/AvoidDirectAccessTriggerMap" message="Avoid directly accessing Trigger.old and Trigger.new">
 		<priority>3</priority>
 		<properties>
@@ -196,15 +169,7 @@
 			<property name="cc_block_highlighting" value="false" />
 		</properties>
 	</rule>
-	<rule ref="category/apex/codestyle.xml/VariableNamingConventions" message="{0} variable {1} should begin with {2}">
-		<priority>3</priority>
-		<properties>
-			<!-- relevant for Code Climate output only -->
-			<property name="cc_categories" value="Style" />
-			<property name="cc_remediation_points_multiplier" value="5" />
-			<property name="cc_block_highlighting" value="false" />
-		</properties>
-	</rule>
+
 
 	<!-- TESTS -->
 	<rule ref="category/apex/bestpractices.xml/ApexUnitTestClassShouldHaveAsserts" message="Apex unit test classes should have at least one System.assert() or assertEquals() or AssertNotEquals() call">
@@ -245,15 +210,7 @@
 			<property name="cc_block_highlighting" value="false" />
 		</properties>
 	</rule>
-	<rule ref="category/apex/security.xml/ApexCSRF" message="Avoid making DML operations in Apex class constructor/init method">
-		<priority>3</priority>
-		<properties>
-			<!-- relevant for Code Climate output only -->
-			<property name="cc_categories" value="Security" />
-			<property name="cc_remediation_points_multiplier" value="100" />
-			<property name="cc_block_highlighting" value="false" />
-		</properties>
-	</rule>
+
 	<rule ref="category/apex/security.xml/ApexOpenRedirect" message="Apex classes should safely redirect to a known location">
 		<priority>3</priority>
 		<properties>
