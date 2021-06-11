@@ -11,6 +11,7 @@
 
 public with sharing class Rest_PersonaWrapperService {
     private ErrorLogService logger;
+    System.debug('helo');
     private static final String REQUEST_CONTEXT = 'SalesTapPersonaService';
     private String appName;
     public Rest_PersonaWrapperService(RestRequest request){
